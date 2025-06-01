@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 # CTI-Harvesting-Pipeline
-=======
+
 # ThreatFox Threat Intelligence Ingestion
 
 A pipeline to pull recent ThreatFox IOCs and store them in a local SQL database for analysis.
@@ -35,4 +34,3 @@ python scripts/fetch_iocs.py
 ```
 
 Add scripts/schedule.sh to the crontab for hourly sync.
->>>>>>> 91ed4c8 (Initial commit - ThreatFox API ingestion pipeline)
