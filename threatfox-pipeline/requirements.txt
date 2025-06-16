@@ -1,5 +1,0 @@
-requests
-pytz
-python-dotenv
-tqdm
-pyyaml
