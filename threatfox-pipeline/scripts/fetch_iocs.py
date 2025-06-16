@@ -35,16 +35,28 @@ iocs = data["data"]
 conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
 
+# Fetch all existing IDs once
+cursor.execute('SELECT id FROM threatfox_iocs')
+existing_ids = set(row[0] for row in cursor.fetchall())
+
 for ioc in tqdm(iocs):
+    # Filter: Only allow ioc_type == "ip:port"
+    if ioc.get('ioc_type') != "ip:port":
+        continue  # Skip all other types
+
+    ioc_id = int(ioc['id'])
+    if ioc_id in existing_ids:
+        continue  # Skip if already exists
+
     cursor.execute('''
-        INSERT OR IGNORE INTO threatfox_iocs (
+        INSERT INTO threatfox_iocs (
             id, ioc, threat_type, threat_type_desc, ioc_type,
             ioc_type_desc, malware, malware_printable, malware_alias,
             malware_malpedia, confidence_level, first_seen, last_seen,
             reporter, reference
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
-        int(ioc['id']),
+        ioc_id,
         ioc['ioc'],
         ioc['threat_type'],
         ioc['threat_type_desc'],
@@ -64,7 +76,7 @@ for ioc in tqdm(iocs):
     for tag in ioc.get("tags") or []:
         cursor.execute('''
             INSERT INTO ioc_tags (ioc_id, tag) VALUES (?, ?)
-        ''', (int(ioc['id']), tag))
+        ''', (ioc_id, tag))
 
 conn.commit()
 conn.close()
