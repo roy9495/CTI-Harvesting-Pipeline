@@ -1,0 +1,6 @@
+.env
+db/threatfox.db
+logs/*
+venv/
+__pycache__/
+*.pyc

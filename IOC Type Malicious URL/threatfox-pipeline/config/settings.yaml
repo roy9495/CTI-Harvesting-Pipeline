@@ -1,0 +1,3 @@
+database_path: "db/threatfox.db"
+days_to_fetch: 7
+log_file: "logs/fetch.log"
