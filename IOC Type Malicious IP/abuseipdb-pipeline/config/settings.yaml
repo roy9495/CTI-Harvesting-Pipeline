@@ -1,0 +1,3 @@
+database_path: "db/abuseipdb.db"
+confidence_minimum: 80
+limit: 10000

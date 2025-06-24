@@ -40,9 +40,7 @@ cursor.execute('SELECT id FROM threatfox_iocs')
 existing_ids = set(row[0] for row in cursor.fetchall())
 
 for ioc in tqdm(iocs):
-    # Filter: Only allow ioc_type == "ip:port"
-    if ioc.get('ioc_type') != "ip:port":
-        continue  # Skip all other types
+    # No filter, process all ioc_types
 
     ioc_id = int(ioc['id'])
     if ioc_id in existing_ids:
